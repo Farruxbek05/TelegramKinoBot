@@ -7,8 +7,8 @@ namespace SecondBot
 {
     class Program
     {
-        private static readonly string BotToken2 = "7019000625:AAHa4DZrwj5cx1kAyLomlwnKiNcLno4NC6M"; // Ikkinchi bot tokeni
-        private static readonly string ChannelLink = "https://t.me/FarruxDev05"; // Kanalga havola
+        private static readonly string BotToken2 = "BotToken"; 
+        private static readonly string ChannelLink = "ChannelLink"; 
 
         private static Dictionary<string, string> codeFileIds = new Dictionary<string, string>();
 
@@ -19,15 +19,15 @@ namespace SecondBot
 
             try
             {
-                // StartReceiving metodini chaqirish
+              
                 botClient2.StartReceiving(
-                    HandleUpdateAsync,  // HandleUpdateAsync metodini chaqirish
-                    HandleErrorAsync,   // HandleErrorAsync metodini chaqirish
+                    HandleUpdateAsync,  
+                    HandleErrorAsync,   
                     cancellationToken: cts.Token
                 );
 
-                Console.WriteLine("Ikkinchi bot ishlamoqda...");
-                Console.ReadLine(); // Botni ishlashga davom etish
+                Console.WriteLine("bot ishlamoqda...");
+                Console.ReadLine(); 
             }
             catch (Exception ex)
             {
@@ -43,13 +43,13 @@ namespace SecondBot
 
                 if (message.Text?.StartsWith("/start") == true)
                 {
-                    // Foydalanuvchining kanalga qo'shilganligini tekshirish
+                    
                     var chatId = message.Chat.Id;
                     var member = await botClient.GetChatMemberAsync(chatId, message.From.Id);
 
                     if (member.Status == ChatMemberStatus.Member || member.Status == ChatMemberStatus.Administrator)
                     {
-                        // Kanalga qo'shilgan
+                      
                         await botClient.SendTextMessageAsync(
                             chatId: message.Chat.Id,
                             text: "Kino qodini kiriting",
@@ -58,7 +58,7 @@ namespace SecondBot
                     }
                     else
                     {
-                        // Kanalga qo'shilmagan
+                       
                         await botClient.SendTextMessageAsync(
                             chatId: message.Chat.Id,
                             text: $"Iltimos, kanalga qo'shiling va qaytib Start tugmasini bosing! Kanalga qo'shilish uchun: {ChannelLink}",
@@ -70,12 +70,12 @@ namespace SecondBot
                 {
                     string code = message.Text;
 
-                    // Agar kod mavjud bo'lsa, fayl ID ni yuborish
+                 
                     if (codeFileIds.ContainsKey(code))
                     {
                         var fileId = codeFileIds[code];
 
-                        // Faylni foydalanuvchiga yuborish
+                       
                         await botClient.SendDocumentAsync(
                             chatId: message.Chat.Id,
                             document: fileId,
@@ -85,7 +85,7 @@ namespace SecondBot
                     }
                     else
                     {
-                        // Agar kod topilmasa
+                        
                         await botClient.SendTextMessageAsync(
                             chatId: message.Chat.Id,
                             text: "Bunday kod topilmadi! Iltimos, to'g'ri kod kiriting.",
